@@ -1,7 +1,7 @@
 <title>Kolokwium z umów</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Lexend:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
 /* Layout: jedna kolumna jak arkusz kolokwium; nagłówek z paragrafem, karta pytania, odpowiedzi a)–d) */
 :root{
@@ -10,7 +10,19 @@
   --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --f-read:var(--f-body); --lh:1.55; --ls:0; --ws:0;
 }
+:root[data-font="lexend"]{--f-read:"Lexend",system-ui,sans-serif}
+:root[data-font="atkinson"]{--f-read:"Atkinson Hyperlegible",system-ui,sans-serif}
+:root[data-space="wide"]{--lh:1.85; --ls:.035em; --ws:.14em}
+html{font-size:calc(100% * var(--scale,1))}
+@media (prefers-color-scheme: light){
+  :root[data-tint="krem"]:not([data-theme="dark"]){--bg:#efe7d3;--paper:#fbf5e6;--line:#dfd3b6}
+  :root[data-tint="mieta"]:not([data-theme="dark"]){--bg:#e2efe8;--paper:#f2faf5;--line:#c9ddd1}
+  :root[data-tint="niebo"]:not([data-theme="dark"]){--bg:#e1eaf6;--paper:#f2f6fc;--line:#c8d5e8}}
+:root[data-theme="light"][data-tint="krem"]{--bg:#efe7d3;--paper:#fbf5e6;--line:#dfd3b6}
+:root[data-theme="light"][data-tint="mieta"]{--bg:#e2efe8;--paper:#f2faf5;--line:#c9ddd1}
+:root[data-theme="light"][data-tint="niebo"]{--bg:#e1eaf6;--paper:#f2f6fc;--line:#c8d5e8}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#10141f; --paper:#171d2b; --ink:#e6e9f2; --muted:#9aa3b8; --line:#2a3246;
   --accent:#8fa9ff; --accent-soft:#1f2a47; --ok:#5fd19a; --ok-soft:#14301f; --bad:#ff8a7e; --bad-soft:#3a1a17; --warn:#f0c15a; --warn-soft:#352a10; color-scheme:dark}}
@@ -18,7 +30,7 @@
   --bg:#10141f; --paper:#171d2b; --ink:#e6e9f2; --muted:#9aa3b8; --line:#2a3246;
   --accent:#8fa9ff; --accent-soft:#1f2a47; --ok:#5fd19a; --ok-soft:#14301f; --bad:#ff8a7e; --bad-soft:#3a1a17; --warn:#f0c15a; --warn-soft:#352a10; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1rem;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
 .wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -62,7 +74,23 @@ h2{font-family:var(--f-display);font-size:20px;margin:0}
 .qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
-.qtext{font-size:19px;font-weight:600;line-height:1.4;margin:6px 0 0;text-wrap:pretty}
+.qtext{font-size:1.25rem;font-weight:600;line-height:calc(var(--lh) - .1);margin:6px 0 0;text-wrap:pretty}
+.qtext,.opt .txt,.why,.expl p,.memo p,.ritem h3,.ritem li{font-family:var(--f-read);letter-spacing:var(--ls);word-spacing:var(--ws);line-height:var(--lh)}
+.why{grid-column:2 / -1;display:flex;gap:8px;align-items:flex-start;font-size:.95rem;padding:8px 10px;border-radius:4px;background:var(--paper);border:1px solid var(--line);margin-top:2px}
+.why b.ic{font-family:var(--f-mono);font-size:12px;padding:2px 6px;border-radius:3px;white-space:nowrap;flex:none;margin-top:2px}
+.why.t b.ic{background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok)}
+.why.f b.ic{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad)}
+.why strong,.expl strong{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.memo{border-left:4px solid var(--accent);background:var(--accent-soft);padding:10px 12px;border-radius:0 4px 4px 0}
+.memo p{margin:0}
+.memo b{font-family:var(--f-display);display:block;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.speak{border:1.5px solid var(--line);background:var(--paper);border-radius:4px;padding:6px 10px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.speak:hover{border-color:var(--ink)} .speak[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.prefs{display:flex;flex-direction:column;gap:14px}
+.prefs .prow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center}
+.prefs .prow>span{font-size:14px;color:var(--muted)}
+.prefs .seg{flex-wrap:wrap}
+.sample{font-family:var(--f-read);letter-spacing:var(--ls);word-spacing:var(--ws);line-height:var(--lh);margin:0;padding:10px 12px;border:1px dashed var(--line);border-radius:4px}
 .opts{display:flex;flex-direction:column;gap:10px;margin-top:18px}
 .opt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:start;border:1.5px solid var(--line);border-radius:6px;padding:12px 14px;background:var(--paper);cursor:pointer;transition:border-color .12s,background .12s}
 .opt:hover{border-color:var(--muted)}
@@ -91,11 +119,14 @@ h2{font-family:var(--f-display);font-size:20px;margin:0}
 .review{display:flex;flex-direction:column;gap:12px}
 .ritem{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:6px;padding:14px;background:var(--paper)}
 .ritem.ok{border-left-color:var(--ok)} .ritem.bad{border-left-color:var(--bad)} .ritem.part{border-left-color:var(--warn)}
-.ritem h3{font-size:15.5px;margin:4px 0 8px;font-weight:600}
-.ritem ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;font-size:14px}
-.ritem li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px}
+.ritem h3{font-size:1.05rem;margin:4px 0 8px;font-weight:600}
+.ritem ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.95rem}
+.ritem li .w2{display:block;color:var(--muted);font-weight:400;text-decoration:none;margin-top:2px}
+.ritem li .w2 strong{color:var(--ink)}
+.ritem li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:6px}
 .ritem li.c{color:var(--ok);font-weight:500}
-.ritem li.w{color:var(--bad);text-decoration:line-through}
+.ritem li.w{color:var(--bad)}
+.ritem li.w .ot{text-decoration:line-through}
 .ritem .expl{margin-top:10px;padding-top:10px;font-size:14px}
 .topicbars{display:flex;flex-direction:column;gap:8px}
 .tb{display:grid;grid-template-columns:minmax(0,1fr) 110px 44px;gap:10px;align-items:center;font-size:14px}
@@ -110,6 +141,10 @@ footer{color:var(--muted);font-size:12.5px;text-align:center}
   .card{padding:16px}
   .tb{grid-template-columns:minmax(0,1fr) 70px 40px}
   .kbd{display:none}
+  .prefs .prow{grid-template-columns:1fr}
+  .opt{grid-template-columns:auto minmax(0,1fr)}
+  .opt .tag{grid-column:2;justify-self:start;padding:0}
+  .opt .tag:empty{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -123,12 +158,31 @@ footer{color:var(--muted);font-size:12.5px;text-align:center}
         <p>Prawo umów gospodarczych · część ogólna · test wielokrotnego wyboru</p>
       </div>
     </div>
-    <button class="link" id="homeBtn" hidden>← Menu</button>
+    <div class="row">
+      <button class="speak" id="prefsBtn" aria-expanded="false" aria-controls="prefs">Aa&nbsp;Wygoda czytania</button>
+      <button class="link" id="homeBtn" hidden>← Menu</button>
+    </div>
   </header>
+
+  <section class="card prefs" id="prefs" hidden aria-label="Wygoda czytania">
+    <h2>Wygoda czytania</h2>
+    <div class="prow"><span>Czcionka</span><div class="seg" role="group" aria-label="Czcionka">
+      <button data-pref="font" data-v="plex">Standardowa</button><button data-pref="font" data-v="lexend">Lexend (płynne czytanie)</button><button data-pref="font" data-v="atkinson">Atkinson (wyraźne litery)</button></div></div>
+    <div class="prow"><span>Wielkość tekstu</span><div class="seg" role="group" aria-label="Wielkość tekstu">
+      <button data-pref="scale" data-v="1">A</button><button data-pref="scale" data-v="1.15">A+</button><button data-pref="scale" data-v="1.3">A++</button><button data-pref="scale" data-v="1.45">A+++</button></div></div>
+    <div class="prow"><span>Odstępy</span><div class="seg" role="group" aria-label="Odstępy">
+      <button data-pref="space" data-v="normal">Zwykłe</button><button data-pref="space" data-v="wide">Szerokie</button></div></div>
+    <div class="prow"><span>Kolor tła</span><div class="seg" role="group" aria-label="Kolor tła">
+      <button data-pref="tint" data-v="none">Białe</button><button data-pref="tint" data-v="krem">Kremowe</button><button data-pref="tint" data-v="mieta">Miętowe</button><button data-pref="tint" data-v="niebo">Błękitne</button></div></div>
+    <div class="prow" id="ttsRow"><span>Czytanie na głos</span><div class="seg" role="group" aria-label="Tempo czytania">
+      <button data-pref="rate" data-v="0.8">Wolno</button><button data-pref="rate" data-v="0.95">Normalnie</button><button data-pref="rate" data-v="1.1">Szybko</button></div></div>
+    <p class="sample">Oferta wiąże oferenta. Przy ofercie w postaci <strong>elektronicznej</strong> oblat musi <strong>niezwłocznie</strong> potwierdzić jej otrzymanie.</p>
+    <p class="hint">Kolor tła działa w jasnym motywie. Przy pytaniu jest przycisk „Czytaj”: czyta pytanie, a po sprawdzeniu także wyjaśnienia.</p>
+  </section>
 
   <main id="app"></main>
 
-  <footer>Każde pytanie może mieć od 1 do 4 poprawnych odpowiedzi. Punkt tylko za komplet poprawnych zaznaczeń. Postęp zapisuje się w tej przeglądarce.</footer>
+  <footer>Każde pytanie może mieć od 1 do 4 poprawnych odpowiedzi. Punkt tylko za komplet poprawnych zaznaczeń. Przy każdej odpowiedzi jest wyjaśnienie, dlaczego jest dobra albo zła. Postęp i ustawienia zapisują się w tej przeglądarce.</footer>
 </div>
 
 <script src="pytania.js"></script>
@@ -158,6 +212,49 @@ function record(id, correct){
 const topics = [...new Set(Q.map(q=>q.t))];
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function md(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>"); }
+function plain(s){ return String(s).replace(/\*\*/g,""); }
+function whyHtml(q,oi){
+  if(!q.w) return "";
+  const t=q.c.includes(oi);
+  return `<div class="why ${t?"t":"f"}"><b class="ic">${t?"✓ prawda":"✕ fałsz"}</b><span>${md(q.w[oi].replace(/^(Tak|Nie)\.\s*/,""))}</span></div>`;
+}
+
+/* ---------- wygoda czytania ---------- */
+const PREF_KEY="kolos-umowy-prefs";
+let prefs={font:"plex",scale:"1",space:"normal",tint:"none",rate:"0.95"};
+try{ Object.assign(prefs, JSON.parse(localStorage.getItem(PREF_KEY))||{}); }catch(e){}
+function applyPrefs(){
+  const r=document.documentElement;
+  if(prefs.font==="plex") r.removeAttribute("data-font"); else r.setAttribute("data-font",prefs.font);
+  r.style.setProperty("--scale",prefs.scale);
+  r.setAttribute("data-space",prefs.space);
+  if(prefs.tint==="none") r.removeAttribute("data-tint"); else r.setAttribute("data-tint",prefs.tint);
+  document.querySelectorAll("[data-pref]").forEach(b=>b.setAttribute("aria-pressed", String(prefs[b.dataset.pref]===b.dataset.v)));
+  try{ localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); }catch(e){}
+}
+document.querySelectorAll("[data-pref]").forEach(b=>b.onclick=()=>{ prefs[b.dataset.pref]=b.dataset.v; applyPrefs(); });
+const prefsBtn=document.getElementById("prefsBtn"), prefsBox=document.getElementById("prefs");
+prefsBtn.onclick=()=>{ prefsBox.hidden=!prefsBox.hidden; prefsBtn.setAttribute("aria-expanded",String(!prefsBox.hidden)); };
+applyPrefs();
+
+/* czytanie na głos (Web Speech API) */
+const TTS = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+if(!TTS){ const r=document.getElementById("ttsRow"); if(r) r.hidden=true; }
+let speaking=false;
+function plVoice(){ try{ return TTS.getVoices().find(v=>/^pl/i.test(v.lang)); }catch(e){ return null; } }
+function speak(parts){
+  if(!TTS) return;
+  TTS.cancel(); speaking=true; markSpeak();
+  parts.forEach((txt,k)=>{
+    const u=new SpeechSynthesisUtterance(txt); u.lang="pl-PL"; u.rate=+prefs.rate;
+    const v=plVoice(); if(v) u.voice=v;
+    if(k===parts.length-1){ u.onend=u.onerror=()=>{ speaking=false; markSpeak(); }; }
+    TTS.speak(u);
+  });
+}
+function stopSpeak(){ if(TTS){ TTS.cancel(); } speaking=false; markSpeak(); }
+function markSpeak(){ const b=document.getElementById("speakBtn"); if(b){ b.setAttribute("aria-pressed",String(speaking)); b.textContent = speaking? "■ Zatrzymaj" : "🔊 Czytaj"; } }
 function selectedTopics(){ return mem.topics && mem.topics.length ? mem.topics : topics; }
 function pool(){ const st=selectedTopics(); return Q.filter(q=>st.includes(q.t)); }
 function wrongIds(){ return Q.filter(q=>mem.q[q.id] && mem.q[q.id].last===0 && selectedTopics().includes(q.t)).map(q=>q.id); }
@@ -267,6 +364,7 @@ function start(mode, qs, retry){
 }
 
 function renderQ(){
+  if(speaking) stopSpeak();
   const it=S.items[S.i], q=it.q, n=S.items.length, learn=S.mode==="learn";
   const g = it.checked ? grade(it) : null;
   const optHtml = it.order.map((oi,pos)=>{
@@ -280,7 +378,7 @@ function renderQ(){
     } else if(sel) cls+=" sel";
     return `<label class="${cls}" data-oi="${oi}">
       <input type="checkbox" id="opt-${S.i}-${pos}" ${sel?"checked":""} ${it.checked&&learn?"disabled":""}>
-      <span class="letter">${LETTERS[pos]}</span><span class="txt">${esc(q.o[oi])}</span><span class="tag">${tag}</span></label>`;
+      <span class="letter">${LETTERS[pos]}</span><span class="txt">${esc(q.o[oi])}</span><span class="tag">${tag}</span>${it.checked&&learn?whyHtml(q,oi):""}</label>`;
   }).join("");
 
   let verdict="";
@@ -295,12 +393,12 @@ function renderQ(){
   <section class="card">
     <div class="qhead">
       <span class="eyebrow">${esc(q.t)}</span>
-      <span class="eyebrow" style="font-variant-numeric:tabular-nums">${S.mode==="test"?"Kolokwium":(S.retry?"Powtórka":"Nauka")} · ${S.i+1} / ${n}</span>
+      <span class="row" style="gap:10px"><span class="eyebrow" style="font-variant-numeric:tabular-nums">${S.mode==="test"?"Kolokwium":(S.retry?"Powtórka":"Nauka")} · ${S.i+1} / ${n}</span>${TTS?'<button class="speak" id="speakBtn" aria-pressed="false">🔊 Czytaj</button>':''}</span>
     </div>
     <div class="bar" style="margin:10px 0 14px"><i style="width:${(S.i)/n*100}%"></i></div>
     <p class="qtext">${esc(q.q)}</p>
     <div class="opts" role="group" aria-label="Odpowiedzi">${optHtml}</div>
-    ${it.checked&&learn? `<div class="expl">${verdict}<p><span class="ref">Poprawne: ${corrLetters}</span></p><p>${esc(q.e)}</p></div>`:""}
+    ${it.checked&&learn? `<div class="expl">${verdict}<p><span class="ref">Poprawne: ${corrLetters}</span></p><div class="memo"><b>Zapamiętaj</b><p>${md(q.e)}</p></div></div>`:""}
     <div class="actions">
       <span class="kbd">klawisze: 1–4 / a–d zaznacz · Enter ${learn?"sprawdź / dalej":"dalej"}</span>
       <div class="row">
@@ -314,6 +412,11 @@ function renderQ(){
   app.querySelectorAll(".opt").forEach(el=>{
     el.addEventListener("click",e=>{ e.preventDefault(); toggle(+el.dataset.oi); });
   });
+  const sb=document.getElementById("speakBtn");
+  if(sb){ markSpeak(); sb.onclick=()=>{ if(speaking){ stopSpeak(); return; }
+    const parts=[q.q].concat(it.order.map((oi,pos)=>"Odpowiedź "+LETTERS[pos]+". "+q.o[oi]+"."));
+    if(it.checked && learn){ it.order.forEach((oi,pos)=>parts.push("Odpowiedź "+LETTERS[pos]+": "+(q.c.includes(oi)?"prawda. ":"fałsz. ")+plain(q.w?q.w[oi]:"").replace(/^(Tak|Nie)\.\s*/,""))); parts.push("Zapamiętaj. "+q.e); }
+    speak(parts); }; }
   const c=document.getElementById("check"); if(c) c.onclick=check;
   const nx=document.getElementById("next"); if(nx) nx.onclick=next;
   const pv=document.getElementById("prev"); if(pv) pv.onclick=()=>{S.i--;renderQ();};
@@ -370,9 +473,10 @@ function finish(){
           const sel=r.it.picked.has(oi), corr=q.c.includes(oi);
           const mark = corr? (sel?"✓":"○") : (sel?"✕":"");
           const c = corr?"c":(sel?"w":"");
-          return `<li class="${c}"><span>${LETTERS[pos]})</span><span>${mark?mark+" ":""}${esc(q.o[oi])}</span></li>`;
+          const w = q.w? `<span class="w2"><b>${corr?"✓ prawda":"✕ fałsz"}:</b> ${md(q.w[oi].replace(/^(Tak|Nie)\.\s*/,""))}</span>`:"";
+          return `<li class="${c}"><span>${LETTERS[pos]})</span><span><span class="ot">${mark?mark+" ":""}${esc(q.o[oi])}</span>${w}</span></li>`;
         }).join("")}</ul>
-        <div class="expl"><p>${esc(q.e)}</p></div>
+        <div class="expl"><div class="memo"><b>Zapamiętaj</b><p>${md(q.e)}</p></div></div>
       </article>`;}).join("")}
     <p class="hint">✓ zaznaczona poprawna · ○ poprawna pominięta · ✕ zaznaczona błędna</p>
   </section>`:""}
@@ -397,7 +501,7 @@ document.addEventListener("keydown",e=>{
   }
 });
 
-homeBtn.onclick=()=>{ S=null; renderHome(); };
+homeBtn.onclick=()=>{ stopSpeak(); S=null; renderHome(); };
 if(!Q.length){ app.innerHTML='<div class="card">Nie udało się wczytać pytań (pytania.js).</div>'; return; }
 renderHome();
 })();
