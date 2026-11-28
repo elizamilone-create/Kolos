@@ -62,6 +62,7 @@ const {chromium}=require('playwright');const fs=require('fs');const path=require
 (async()=>{const dir=process.argv[2];const b=await chromium.launch();
 const pg=await b.newPage({viewport:{width:1920,height:1080}});
 for(const f of fs.readdirSync(dir).filter(x=>/^s\d+\.html$/.test(x)).sort()){
+  const png=path.join(dir,f.replace('.html','.png'));if(fs.existsSync(png)&&fs.statSync(png).mtimeMs>=fs.statSync(path.join(dir,f)).mtimeMs) continue;
   await pg.goto('file://'+path.join(dir,f));await pg.evaluate(()=>document.fonts.ready);await pg.waitForTimeout(120);
   const over=await pg.evaluate(()=>{const b=document.querySelector('.body');return b? b.scrollHeight>b.clientHeight+2:false});
   if(over) console.log('UWAGA: przepełniony slajd',f);
@@ -71,7 +72,8 @@ await b.close();})();
 
 def render_slides():
     for i, s in enumerate(S):
-        (WORK / f"s{i:03d}.html").write_text(slide_html(i, s), encoding="utf-8")
+        f = WORK / f"s{i:03d}.html"; h = slide_html(i, s)
+        if not f.exists() or f.read_text(encoding="utf-8") != h: f.write_text(h, encoding="utf-8")
     js = WORK / "zrzuty.js"; js.write_text(NODE_SHOT)
     r = subprocess.run(["node", str(js), str(WORK.resolve())], capture_output=True, text=True)
     print(r.stdout, r.stderr)
@@ -97,8 +99,8 @@ def build():
     t = 0.0; k = 1
     for i, s in enumerate(S):
         wav = WORK / f"a{i:03d}.wav"; d = dur(wav) + PAUSE_AFTER
-        seg = WORK / f"v{i:03d}.mp4"
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-framerate", str(FPS), "-i", str(WORK / f"s{i:03d}.png"),
+        seg = WORK / f"v{i:03d}.mp4"; png = WORK / f"s{i:03d}.png"
+        if not seg.exists() or seg.stat().st_mtime < png.stat().st_mtime: subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-framerate", str(FPS), "-i", str(WORK / f"s{i:03d}.png"),
                         "-i", str(wav), "-af", "apad", "-t", f"{d:.3f}", "-c:v", "libx264", "-tune", "stillimage",
                         "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-r", str(FPS),
                         "-c:a", "aac", "-b:a", "128k", "-ar", "44100", "-ac", "1", str(seg)], check=True)

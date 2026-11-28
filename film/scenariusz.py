@@ -187,10 +187,10 @@ slajd(R,"Na odległość i poza lokalem",[
 "ustawy nie stosuje się poza lokalem do **50 zł**"],
 "Ustawa o prawach konsumenta zna dwa szczególne tryby. Umowa na odległość jest zawierana w zorganizowanym systemie, bez fizycznej obecności stron, wyłącznie środkami na odległość, aż do chwili zawarcia włącznie. Jeżeli strony spotkały się w trakcie negocjacji, to nie jest umowa na odległość. Umowa poza lokalem przedsiębiorstwa to umowa przy jednoczesnej obecności stron, ale poza lokalem, na przykład na pokazie albo wycieczce. Lokal to nieruchomość, w której przedsiębiorca działa na stałe, albo rzecz ruchoma, na przykład food truck, w której działa zwyczajowo albo na stałe. Ustawy nie stosuje się do umów poza lokalem do pięćdziesięciu złotych.")
 slajd(R,"Obowiązki informacyjne",[
-"art. 12 – najpóźniej, gdy konsument wyraża **wolę związania się** umową",
-"art. 7 – konsument **nie może zrzec się** praw (semiimperatywność)",
-"art. 17 – przycisk „**zamówienie z obowiązkiem zapłaty**”, inaczej umowy **nie ma**",
-"art. 20 – telefon: cel rozmowy na **początku**; oświadczenie **utrwalone**",
+"art. 12 – info najpóźniej przy **woli związania się**",
+"art. 7 – **nie można zrzec się** praw",
+"art. 17 – „**zamówienie z obowiązkiem zapłaty**” – inaczej **brak umowy**",
+"art. 20 – telefon: cel na **początku**, oświadczenie **utrwalone**",
 "art. 21 – potwierdzenie na **trwałym nośniku**"],
 "Przedsiębiorca musi poinformować konsumenta najpóźniej w chwili, gdy konsument wyraża wolę związania się umową. Konsument nie może zrzec się praw z ustawy. Gorsze dla niego postanowienia są nieważne, a w ich miejsce wchodzi ustawa. Przy zamówieniu przez internet przycisk musi mówić: zamówienie z obowiązkiem zapłaty. Jeśli nie mówi, umowa nie zostaje zawarta. Przy telefonie przedsiębiorca na początku mówi, w jakim celu dzwoni. Oświadczenie konsumenta jest skuteczne dopiero, gdy zostało utrwalone na trwałym nośniku po potwierdzeniu od przedsiębiorcy. Po zawarciu umowy na odległość przedsiębiorca wysyła potwierdzenie na trwałym nośniku.")
 slajd(R,"Gdy przedsiębiorca nie poinformował",[
